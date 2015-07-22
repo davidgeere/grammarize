@@ -1,5 +1,7 @@
 $:.push File.expand_path("../lib", __FILE__)
 
+require "grammarize/version"
+
 Gem::Specification.new do |s|
   s.name        = 'grammarize'
   s.version     = Grammarize::VERSION
