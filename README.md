@@ -186,6 +186,22 @@ Usage:
 "woman".neutralize # person
 ```
 
+###Configuration
+Not much to do other than just bundling the gem, however if you want to extend the inflections create an initializer file in your config called grammarize.rb and add your inflections
+
+```
+# Add your own genders
+Grammarize::Inflector.inflections(:en) do |inflect|
+  # male, female, neutra
+  inflect.gender "bull", "cow", "cattle"
+  
+  # first, second, third person
+  inflect.person "i", "you", "hers"
+end
+```
+
+*you will notice that you can sort of use your own locale with the exception that for now it only really support english given that in the methods I hard coded the indicators in the apply_pronouns and apply_familiar which will be updated soon to be configurable.
+
 ##Tests
 
 Nope no tests either.
