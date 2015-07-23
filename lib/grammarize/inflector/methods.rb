@@ -87,7 +87,7 @@ module Grammarize
 
       index = gender_index(word, locale)
 
-      owner = apply_inflections([:first, :second, :third].index(person), indicator, inflections(locale).persons)
+      owner = apply_inflections([:first, :second, :third].index(person), indicator_singularity(indicator, word), inflections(locale).persons)
 
       apply_inflections(index, owner, inflections(locale).genders)
 
@@ -97,23 +97,25 @@ module Grammarize
 
       index = gender_index(word, locale)
 
-      apply_inflections(index, indicator, inflections(locale).genders)
+      apply_inflections(index, indicator_singularity(indicator, word), inflections(locale).genders)
 
     end
 
-    # Applies inflection rules for +singularize+ and +pluralize+.
-    #
     #  apply_inflections('female', inflections.males)    # => "male"
     #  apply_inflections('male', inflections.females) # => "female"
     def apply_inflections(index, word, matrix)
 
+      is_singular = determine_singularity(word)
+
       result = word.to_s.dup
+
+      word = assert_singularity(word)
 
       matrix.each do |row|
         next unless row.include?(word)
 
         unless row[index].blank?
-          result = row[index]
+          result = toggle_singularity(row[index], is_singular)
           break
         end
       end
@@ -124,9 +126,11 @@ module Grammarize
 
     def gender_index(word, locale = :en)
 
+      is_singular = determine_singularity(word)
+
       genders = inflections(locale).genders
 
-      index = determine_gender(word, genders)
+      index = determine_gender(assert_singularity(word), genders)
 
     end
 
@@ -144,5 +148,24 @@ module Grammarize
       index
 
     end
+
+    private
+
+    def assert_singularity(word)
+      determine_singularity(word) ? word : word.singularize
+    end
+
+    def toggle_singularity(word, singular)
+      singular ? word.singularize : word.pluralize
+    end
+
+    def indicator_singularity(indicator, word)
+      determine_singularity(word) ? indicator : indicator.pluralize
+    end
+
+    def determine_singularity(word)
+      word.pluralize != word && word.singularize == word
+    end
+
   end
 end
