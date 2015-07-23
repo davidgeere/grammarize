@@ -190,7 +190,8 @@ Usage:
 Not much to do other than just bundling the gem, however if you want to extend the inflections create an initializer file in your config called grammarize.rb and add your inflections
 
 ```
-# Add your own genders
+# config/initializers/grammarize.rb
+
 Grammarize::Inflector.inflections(:en) do |inflect|
   # male, female, neutra
   inflect.gender "bull", "cow", "cattle"
