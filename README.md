@@ -183,7 +183,7 @@ neutralize(locale = :en)
 
 Usage:
 ```
-"woman".femaleize # person
+"woman".neutralize # person
 ```
 
 ##Tests
