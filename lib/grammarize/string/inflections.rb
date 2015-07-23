@@ -30,6 +30,10 @@ class String
     Grammarize::Inflector.casualize(self, locale)
   end
 
+  def familize(relationship, locale = :en)
+    Grammarize::Inflector.familize(self, relationship, locale)
+  end
+
   def genderize(locale = :en)
     Grammarize::Inflector.genderize(self, locale)
   end

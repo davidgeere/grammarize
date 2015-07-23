@@ -33,6 +33,28 @@ module Grammarize
       apply_familiar("guy", word, locale)
     end
 
+    def familize(word, relationship, locale = :en)
+
+      result = word
+      indicator = nil
+
+      case relationship
+      when :parent
+        indicator = "mother"
+      when :grandparent
+        indicator = "grandmother"
+      when :child
+        indicator = "daughter"
+      when :grandchild
+        indicator = "granddaughter"
+      end
+
+      result = apply_familiar(indicator, word, locale) unless indicator.blank?
+
+      result
+
+    end
+
     # Returns the gender of the word in the string.
     #
     # If passed an optional +locale+ parameter, the word will be
