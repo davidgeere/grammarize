@@ -25,7 +25,7 @@ module Grammarize
       apply_familiar("woman", word, locale)
     end
 
-    def childize(gender, locale = :en)
+    def childize(word, locale = :en)
       apply_familiar("boy", word, locale)
     end
 
