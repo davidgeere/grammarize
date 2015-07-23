@@ -21,82 +21,24 @@ module Grammarize
         @__instance__[locale] ||= new
       end
 
-      attr_reader :males, :females, :neutrals
+      attr_reader :genders, :persons
 
       def initialize
-        @males, @females, @neutrals, @firsts, @seconds, @thirds = [], [], [], [], [], []
-      end
-
-      def male(rule, replacement)
-        @males.prepend([rule.downcase, replacement.downcase])
-      end
-
-      def female(rule, replacement)
-        @females.prepend([rule.downcase, replacement.downcase])
-      end
-
-      def neutra(rule, replacement)
-        @neutrals.prepend([rule.downcase, replacement.downcase])
-      end
-
-      def first(rule, replacement)
-        @firsts.prepend([rule.downcase, replacement.downcase])
-      end
-
-      def second(rule, replacement)
-        @seconds.prepend([rule.downcase, replacement.downcase])
-      end
-
-      def third(rule, replacement)
-        @thirds.prepend([rule.downcase, replacement.downcase])
+        @genders, @persons = [], []
       end
 
       def person(first, second, third)
-
-        #first person
-        first(second, first)
-        first(third, first)
-        first(first, first)
-
-        #second person
-        second(first, second)
-        second(third, second)
-        second(second, second)
-
-        #third person
-        third(first, third)
-        third(second, third)
-        third(third, third)
-
+        @persons.prepend([first, second, third])
       end
 
-      def role(male, female, neutra=nil)
-
-        #females
-        female(male, female)
-        female(female, female)
-        female(neutra, female) unless neutra.blank?
-
-        #males
-        male(female, male)
-        male(male, male)
-        male(neutra, male) unless neutra.blank?
-
-        #neutrals
-        unless neutra.blank?
-
-          neutra(female, neutra)
-          neutra(male, neutra)
-          neutra(neutra, neutra)
-
-        end
-
+      def gender(male, female, neutra=nil)
+        @genders.prepend([male, female, neutra])
       end
 
       def clear(scope = :all)
         case scope
           when :all
-            @males, @females, @neutras = [], [], []
+            @genders, @persons = [], []
           else
             instance_variable_set "@#{scope}", []
         end

@@ -129,8 +129,8 @@ module Grammarize
     #   genderize('waitron')    # => "neutra"
     def genderize(word, locale = :en)
 
-      return "female" if determine_gender(word, inflections(locale).males)
-      return "male" if determine_gender(word, inflections(locale).females)
+      return "male" if determine_gender(word, inflections(locale).males)
+      return "female" if determine_gender(word, inflections(locale).females)
       return "neutra" if determine_gender(word, inflections(locale).neutrals)
 
     end
@@ -144,7 +144,7 @@ module Grammarize
     #   maleize('female')             # => "male"
     #   maleize('chica', :es)         # => "chico"
     def maleize(word, locale = :en)
-      apply_inflections(word, inflections(locale).males)
+      apply_inflections(:male, word, locale)
     end
 
     # Returns the female form of the word in the string.
@@ -156,7 +156,7 @@ module Grammarize
     #   femaleize('male')             # => "female"
     #   femaleize('chico', :es)       # => "chica"
     def femaleize(word, locale = :en)
-      apply_inflections(word, inflections(locale).females)
+      apply_inflections(:female, word, locale)
     end
 
     # Returns the neutral form of the word in the string.
@@ -167,21 +167,36 @@ module Grammarize
     #
     #   neutralize('waitress')             # => "waitron"
     def neutralize(word, locale = :en)
-      apply_inflections(word, inflections(locale).neutrals)
+      apply_inflections(:neutra, word, locale)
     end
 
     # Applies inflection rules for +singularize+ and +pluralize+.
     #
     #  apply_inflections('female', inflections.males)    # => "male"
     #  apply_inflections('male', inflections.females) # => "female"
-    def apply_inflections(word, rules)
+    def apply_inflections(gender, word, locale = :en)
 
       result = word.to_s.dup
 
-      rules.each { |(rule, replacement)| break if result.sub!(rule, replacement) }
+      genders = inflections(locale).genders
+
+      index = [:male, :female, :neutra].index(gender)
+
+      genders.each do |row|
+        next unless row.include?(word)
+
+        unless row[index].blank?
+          result = row[index]
+          break
+        end
+      end
 
       result
 
+    end
+
+    def get_genders
+      inflections(:en).genders
     end
 
     def determine_gender(word, rules)
