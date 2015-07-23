@@ -21,7 +21,7 @@ I am being a little extreme in my example but I think for the sake of user exper
 
 **Using Grammarize**
 ```
-@sentence = "#{@john.name} said to #{@susan.name}, #{john.gender.subjectize(3)} likes #{susan.gender.objectize(3)} dress."
+@sentence = "#{@john.name} said to #{@susan.name}, #{john.gender.subjectize(:third)} likes #{susan.gender.objectize(:third)} dress."
 ```
 
 > John said to Susan, **he** likes **her** dress.
@@ -48,6 +48,143 @@ Here are a few more examples
 ##Documentation
 
 There are no documents yet sorry! However I will do more examples and flesh out the documentation as I work on it more.
+
+###API 
+
+**Subjectize**
+This results in personal pronouns (i, you, he, she, it) as a subject, with allowance for 1st, 2nd and 3rd person.
+```
+subjectize(person=:first, locale = :en)
+```
+
+Usage:
+```
+"woman".subjectize # i
+"woman".subjectize :first # i
+"woman".subjectize :second # you
+"woman".subjectize :third # she
+```
+
+**Objectize**
+This results in personal pronouns (me, you, him, her, it) as an object, with allowance for 1st, 2nd and 3rd person.
+```
+objectize(person=:first, locale = :en)
+```
+
+Usage:
+```
+"woman".objectize # me
+"woman".objectize :first # me
+"woman".objectize :second # you
+"woman".objectize :third # her
+```
+
+**Possessivize**
+This results in possessive pronouns (mine, yours, his, hers, its), with allowance for 1st, 2nd and 3rd person.
+```
+possessivize(person=:first, locale = :en)
+```
+
+Usage:
+```
+"woman".possessivize # mine
+"woman".possessivize :first # mine
+"woman".possessivize :second # yours
+"woman".possessivize :third # hers
+```
+
+**Ownerize**
+This results in possessive adjectives (my, your, his, her, its), with allowance for 1st, 2nd and 3rd person.
+```
+ownerize(person=:first, locale = :en)
+```
+
+Usage:
+```
+"woman".ownerize # my
+"woman".ownerize :first # my
+"woman".ownerize :second # your
+"woman".ownerize :third # her
+
+```
+
+**Adultize**
+This results in man, woman and person.
+```
+adultize(locale = :en)
+```
+
+Usage:
+```
+"girl".adultize # woman
+```
+
+**Childize**
+This results in boy, girl and child.
+```
+childize(locale = :en)
+```
+
+Usage:
+```
+"woman".childize # girl
+
+```
+
+**Casualize**
+This results in guy, girl and person.
+```
+casualize(locale = :en)
+```
+
+Usage:
+```
+"woman".casualize # girl
+```
+
+**Genderize**
+This results in male, female and neutral.
+```
+genderize(locale = :en)
+```
+
+Usage:
+```
+"woman".genderize # female
+```
+
+**Maleize**
+Turns whatever you give it into the male form - assume the inflector has it stored
+```
+maleize(locale = :en)
+```
+
+Usage:
+```
+"woman".maleize # man
+```
+
+**Femaleize**
+Turns whatever you give it into the female form - assume the inflector has it stored
+```
+femaleize(locale = :en)
+```
+
+Usage:
+```
+"man".femaleize # woman
+```
+
+**Neutralize**
+Turns whatever you give it into the neutral form - assume the inflector has it stored
+```
+neutralize(locale = :en)
+```
+
+Usage:
+```
+"woman".femaleize # person
+```
 
 ##Tests
 
