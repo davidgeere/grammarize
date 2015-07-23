@@ -2,48 +2,48 @@ require 'grammarize/inflector/methods'
 
 class String
 
-  def subjectize(person=1)
-    Grammarize::Inflector.subjectize(self, person)
+  def subjectize(person=:first, locale = :en)
+    Grammarize::Inflector.subjectize(self, person, locale)
   end
 
-  def objectize(person=1)
-    Grammarize::Inflector.objectize(self, person)
+  def objectize(person=:first, locale = :en)
+    Grammarize::Inflector.objectize(self, person, locale)
   end
 
-  def possessivize(person=1)
-    Grammarize::Inflector.possessivize(self, person)
+  def possessivize(person=:first, locale = :en)
+    Grammarize::Inflector.possessivize(self, person, locale)
   end
 
-  def ownerize(person=1)
-    Grammarize::Inflector.ownerize(self, person)
+  def ownerize(person=:first, locale = :en)
+    Grammarize::Inflector.ownerize(self, person, locale)
   end
 
-  def adultize
-    Grammarize::Inflector.adultize(self)
+  def adultize(locale = :en)
+    Grammarize::Inflector.adultize(self, locale)
   end
 
-  def childize
-    Grammarize::Inflector.childize(self)
+  def childize(locale = :en)
+    Grammarize::Inflector.childize(self, locale)
   end
 
-  def casualize
-    Grammarize::Inflector.casualize(self)
+  def casualize(locale = :en)
+    Grammarize::Inflector.casualize(self, locale)
   end
 
-  def genderize
-    Grammarize::Inflector.genderize(self, :en)
+  def genderize(locale = :en)
+    Grammarize::Inflector.genderize(self, locale)
   end
 
-  def maleize
-    Grammarize::Inflector.maleize(self, :en)
+  def maleize(locale = :en)
+    Grammarize::Inflector.maleize(self, locale)
   end
 
-  def femaleize
-    Grammarize::Inflector.femaleize(self, :en)
+  def femaleize(locale = :en)
+    Grammarize::Inflector.femaleize(self, locale)
   end
 
-  def neutralize
-    Grammarize::Inflector.neutralize(self, :en)
+  def neutralize(locale = :en)
+    Grammarize::Inflector.neutralize(self, locale)
   end
 
 end

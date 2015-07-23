@@ -5,117 +5,32 @@ module Grammarize
 
   module Inflector
 
-    def subjectize(gender, person=1)
-
-      case person
-      when 1
-        subject = "i"
-      when 2
-        subject = "you"
-      when 3
-        case gender.downcase
-        when "male"
-          "he"
-        when "female"
-          "she"
-        else
-          "it"
-        end
-      end
-
+    def subjectize(word, person=:first, locale = :en)
+      apply_pronouns("i", word, person, locale)
     end
 
-    def objectize(gender, person=1)
-
-      case person
-      when 1
-        subject = "me"
-      when 2
-        subject = "you"
-      when 3
-        case gender.downcase
-        when "male"
-          "him"
-        when "female"
-          "her"
-        else
-          "it"
-        end
-      end
-
+    def objectize(word, person=:first, locale = :en)
+      apply_pronouns("me", word, person, locale)
     end
 
-    def possessivize(gender, person=1)
-
-      case person
-      when 1
-        subject = "my"
-      when 2
-        subject = "your"
-      when 3
-        case gender.downcase
-        when "male"
-          "his"
-        when "female"
-          "her"
-        else
-          "its"
-        end
-      end
-
+    def possessivize(word, person=:first, locale = :en)
+      apply_pronouns("my", word, person, locale)
     end
 
-    def ownerize(gender, person=1)
-
-      case person
-      when 1
-        subject = "mine"
-      when 2
-        subject = "yours"
-      when 3
-        case gender.downcase
-        when "male"
-          "his"
-        when "female"
-          "hers"
-        else
-          "theirs"
-        end
-      end
-
+    def ownerize(word, person=:first, locale = :en)
+      apply_pronouns("mine", word, person, locale)
     end
 
-    def adultize(gender)
-      case gender.downcase
-      when "male"
-        "man"
-      when "female"
-        "woman"
-      else
-        "it"
-      end
+    def adultize(word, locale = :en)
+      apply_familiar("woman", word, locale)
     end
 
-    def childize(gender)
-      case gender.downcase
-      when "male"
-        "boy"
-      when "female"
-        "girl"
-      else
-        "it"
-      end
+    def childize(gender, locale = :en)
+      apply_familiar("boy", word, locale)
     end
 
-    def casualize(gender)
-      case gender.downcase
-      when "male"
-        "guy"
-      when "female"
-        "girl"
-      else
-        "it"
-      end
+    def casualize(word, locale = :en)
+      apply_familiar("guy", word, locale)
     end
 
     # Returns the gender of the word in the string.
@@ -129,9 +44,7 @@ module Grammarize
     #   genderize('waitron')    # => "neutra"
     def genderize(word, locale = :en)
 
-      return "male" if determine_gender(word, inflections(locale).males)
-      return "female" if determine_gender(word, inflections(locale).females)
-      return "neutra" if determine_gender(word, inflections(locale).neutrals)
+      ["male", "female", "neutral"][gender_index(word, locale)]
 
     end
 
@@ -144,7 +57,7 @@ module Grammarize
     #   maleize('female')             # => "male"
     #   maleize('chica', :es)         # => "chico"
     def maleize(word, locale = :en)
-      apply_inflections(:male, word, locale)
+      apply_inflections(0, word, inflections(locale).genders)
     end
 
     # Returns the female form of the word in the string.
@@ -156,7 +69,7 @@ module Grammarize
     #   femaleize('male')             # => "female"
     #   femaleize('chico', :es)       # => "chica"
     def femaleize(word, locale = :en)
-      apply_inflections(:female, word, locale)
+      apply_inflections(1, word, inflections(locale).genders)
     end
 
     # Returns the neutral form of the word in the string.
@@ -167,22 +80,36 @@ module Grammarize
     #
     #   neutralize('waitress')             # => "waitron"
     def neutralize(word, locale = :en)
-      apply_inflections(:neutra, word, locale)
+      apply_inflections(2, word, inflections(locale).genders)
+    end
+
+    def apply_pronouns(indicator, word, person=:first, locale = :en)
+
+      index = gender_index(word, locale)
+
+      owner = apply_inflections([:first, :second, :third].index(person), indicator, inflections(locale).persons)
+
+      apply_inflections(index, owner, inflections(locale).genders)
+
+    end
+
+    def apply_familiar(indicator, word, locale = :en)
+
+      index = gender_index(word, locale)
+
+      apply_inflections(index, indicator, inflections(locale).genders)
+
     end
 
     # Applies inflection rules for +singularize+ and +pluralize+.
     #
     #  apply_inflections('female', inflections.males)    # => "male"
     #  apply_inflections('male', inflections.females) # => "female"
-    def apply_inflections(gender, word, locale = :en)
+    def apply_inflections(index, word, matrix)
 
       result = word.to_s.dup
 
-      genders = inflections(locale).genders
-
-      index = [:male, :female, :neutra].index(gender)
-
-      genders.each do |row|
+      matrix.each do |row|
         next unless row.include?(word)
 
         unless row[index].blank?
@@ -195,19 +122,26 @@ module Grammarize
 
     end
 
-    def get_genders
-      inflections(:en).genders
+    def gender_index(word, locale = :en)
+
+      genders = inflections(locale).genders
+
+      index = determine_gender(word, genders)
+
     end
 
-    def determine_gender(word, rules)
+    def determine_gender(word, matrix)
 
-      rules.each do |(rule, replacement)|
-        if rule == word.downcase
-          return true
+      index = 0
+
+      matrix.each do |row|
+        if row.include?(word)
+          index = row.index(word)
+          break
         end
       end
 
-      return false
+      index
 
     end
   end
