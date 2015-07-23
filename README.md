@@ -186,6 +186,20 @@ Usage:
 "woman".neutralize # person
 ```
 
+**Familize**
+This allows your to get the name based on the familial relationship such as :child, :parent, :grandparent etc.
+```
+familize(relationship, locale = :en)
+```
+
+Usage:
+```
+"woman".familize :parent # mother
+"woman".familize :grandparent # grandmother
+"woman".familize :child # daughter
+"woman".familize :grandchild # granddaughter
+```
+
 ###Configuration
 Not much to do other than just bundling the gem, however if you want to extend the inflections create an initializer file in your config called grammarize.rb and add your inflections
 
