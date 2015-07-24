@@ -21,25 +21,25 @@ I am being a little extreme in my example but I think for the sake of user exper
 
 **Using Grammarize**
 ```
-@sentence = "#{@john.name} said to #{@susan.name}, #{john.gender.subjectivize(:third)} likes #{susan.gender.objectivize(:third)} dress."
+@sentence = "#{@john.name} said to #{@susan.name}, #{john.gender.subjectize(:third)} likes #{susan.gender.objectize(:third)} dress."
 ```
 
 > John said to Susan, **he** likes **her** dress.
 
-In the exmaple you see John is the personal pronoun subject and Susan is the personal pronoun object, you will notice I also passed in a 3 into both subjectize and objectize which indicates we are speaking in the 3rd person.
+In the exmaple you see John is the personal pronoun subject and Susan is the personal pronoun object, you will notice I also passed in a 3 into both subjectize and objectize which indicates we are speaking in the 3rd person. 
 
 Here are a few more examples
 
 **First Person Subject**
 ```
-@sentence = "#{@susan.gender.subjectivize} like coffee."
+@sentence = "#{@susan.gender.subjectize} like coffee."
 ```
 
 > **I** like coffee.
 
 **First Person Object**
 ```
-@sentence = "#{@susan.name} helped #{@john.gender.objectivize}"
+@sentence = "#{@susan.name} helped #{@john.gender.objectize}"
 ```
 
 > Susan helped **me**.
@@ -49,34 +49,34 @@ Here are a few more examples
 
 There are no documents yet sorry! However I will do more examples and flesh out the documentation as I work on it more.
 
-###API
+###API 
 
 **Subjectize**
 This results in personal pronouns (i, you, he, she, it) as a subject, with allowance for 1st, 2nd and 3rd person.
 ```
-subjectivize(person=:first, locale = :en)
+subjectize(person=:first, locale = :en)
 ```
 
 Usage:
 ```
-"woman".subjectivize # i
-"woman".subjectivize :first # i
-"woman".subjectivize :second # you
-"woman".subjectivize :third # she
+"woman".subjectize # i
+"woman".subjectize :first # i
+"woman".subjectize :second # you
+"woman".subjectize :third # she
 ```
 
-**Objectivize**
+**Objectize**
 This results in personal pronouns (me, you, him, her, it) as an object, with allowance for 1st, 2nd and 3rd person.
 ```
-objectivize(person=:first, locale = :en)
+objectize(person=:first, locale = :en)
 ```
 
 Usage:
 ```
-"woman".objectivize # me
-"woman".objectivize :first # me
-"woman".objectivize :second # you
-"woman".objectivize :third # her
+"woman".objectize # me
+"woman".objectize :first # me
+"woman".objectize :second # you
+"woman".objectize :third # her
 ```
 
 **Possessivize**
@@ -93,18 +93,18 @@ Usage:
 "woman".possessivize :third # hers
 ```
 
-**Determinerize**
+**Ownerize**
 This results in possessive adjectives (my, your, his, her, its), with allowance for 1st, 2nd and 3rd person.
 ```
-determinerize(person=:first, locale = :en)
+ownerize(person=:first, locale = :en)
 ```
 
 Usage:
 ```
-"woman".determinerize # my
-"woman".determinerize :first # my
-"woman".determinerize :second # your
-"woman".determinerize :third # her
+"woman".ownerize # my
+"woman".ownerize :first # my
+"woman".ownerize :second # your
+"woman".ownerize :third # her
 
 ```
 
@@ -209,7 +209,7 @@ Not much to do other than just bundling the gem, however if you want to extend t
 Grammarize::Inflector.inflections(:en) do |inflect|
   # male, female, neutra
   inflect.gender "bull", "cow", "cattle"
-
+  
   # first, second, third person
   inflect.person "i", "you", "hers"
 end
@@ -223,7 +223,7 @@ Nope no tests either.
 
 ##Contributing
 
-Yes please! I would really like to make it much better so any grammar police need apply.
+Yes please! I would really like to make it much better so any grammar police need apply. 
 
 ##Credits
 
@@ -233,3 +233,8 @@ Developed by [Mitchell Geere](https://github.com/MitchellGeere)
 
 Copyright &copy; 2015 [Daybear, Inc.](http://www.daybear.com)
 Standard [MIT-License](https://github.com/Daybear/grammarize/blob/master/MIT-LICENSE.md)
+
+
+
+
+

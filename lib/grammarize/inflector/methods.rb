@@ -5,11 +5,11 @@ module Grammarize
 
   module Inflector
 
-    def subjectivize(word, person=:first, locale = :en)
+    def subjectize(word, person=:first, locale = :en)
       apply_pronouns("i", word, person, locale)
     end
 
-    def objectivize(word, person=:first, locale = :en)
+    def objectize(word, person=:first, locale = :en)
       apply_pronouns("me", word, person, locale)
     end
 
@@ -17,7 +17,7 @@ module Grammarize
       apply_pronouns("my", word, person, locale)
     end
 
-    def determinerize(word, person=:first, locale = :en)
+    def ownerize(word, person=:first, locale = :en)
       apply_pronouns("mine", word, person, locale)
     end
 

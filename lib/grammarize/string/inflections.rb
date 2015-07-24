@@ -2,20 +2,20 @@ require 'grammarize/inflector/methods'
 
 class String
 
-  def subjectivize(person=:first, locale = :en)
-    Grammarize::Inflector.subjectivize(self, person, locale)
+  def subjectize(person=:first, locale = :en)
+    Grammarize::Inflector.subjectize(self, person, locale)
   end
 
-  def objectivize(person=:first, locale = :en)
-    Grammarize::Inflector.objectivize(self, person, locale)
+  def objectize(person=:first, locale = :en)
+    Grammarize::Inflector.objectize(self, person, locale)
   end
 
   def possessivize(person=:first, locale = :en)
     Grammarize::Inflector.possessivize(self, person, locale)
   end
 
-  def determinerize(person=:first, locale = :en)
-    Grammarize::Inflector.determinerize(self, person, locale)
+  def ownerize(person=:first, locale = :en)
+    Grammarize::Inflector.ownerize(self, person, locale)
   end
 
   def adultize(locale = :en)
