@@ -74,6 +74,8 @@ end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
 
+  inflect.irregular "hour", "hours"
+
   inflect.irregular "this", "these"
   inflect.irregular "that", "those"
 
