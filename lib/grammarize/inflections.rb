@@ -74,8 +74,6 @@ end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
 
-  inflect.irregular "hour", "hours"
-
   inflect.irregular "this", "these"
   inflect.irregular "that", "those"
 
@@ -112,5 +110,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular "him", "them"
   inflect.irregular "her", "them"
   inflect.irregular "it", "them"
+
+  inflect.irregular "hour", "hours"
+  inflect.irregular "menu", "menus"
 
 end
